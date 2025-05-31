@@ -1,37 +1,118 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>DocsExpress</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DocsExpress - Cuestionario Migratorio</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e6f0ff, #ffffff);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      background: white;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #004080;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background-color: #0072e6;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #005bb5;
+    }
+
+    .footer-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #004080;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 1rem;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-  <h1>DocsExpress - Cuestionario Migratorio</h1>
-  <form id="eligibilityForm">
-    <label>Nombre:</label><input type="text" name="name"><br>
-    <label>Año de nacimiento:</label><input type="number" name="birthYear"><br>
-    <label>País de origen:</label><input type="text" name="country"><br>
-    <button type="submit">Verificar elegibilidad</button>
-  </form>
-  <div id="result"></div>
-  <br>
-  <a href="/api/pdf" target="_blank">Descargar PDF de muestra</a>
-  <script>
-    document.getElementById('eligibilityForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        name: form.name.value,
-        birthYear: parseInt(form.birthYear.value),
-        country: form.country.value
-      };
-      const res = await fetch('/api/eligibility', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      document.getElementById('result').innerText = json.message;
-    };
-  </script>
+  <header>
+    <h1>DocsExpress</h1>
+    <p>Formulario de Elegibilidad Migratoria</p>
+  </header>
+
+  <div class="container">
+    <form action="https://docsexpress-backend.onrender.com/check-eligibility" method="POST">
+      <label for="name">Nombre completo:</label>
+      <input type="text" id="name" name="name" placeholder="Ej. Juan Pérez" required />
+
+      <label for="birthYear">Año de nacimiento:</label>
+      <input type="number" id="birthYear" name="birthYear" placeholder="Ej. 1990" required />
+
+      <label for="country">País de origen:</label>
+      <input type="text" id="country" name="country" placeholder="Ej. Venezuela" required />
+
+      <button type="submit">Verificar elegibilidad</button>
+    </form>
+
+    <a class="footer-link" href="https://docsexpress-backend.onrender.com/sample-pdf" target="_blank">
+      Descargar PDF de muestra
+    </a>
+  </div>
+
+  <footer>
+    &copy; 2025 DocsExpress. Todos los derechos reservados.
+  </footer>
 </body>
 </html>
