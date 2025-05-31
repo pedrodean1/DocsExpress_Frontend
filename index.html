@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DocsExpress</title>
+</head>
+<body>
+  <h1>DocsExpress - Cuestionario Migratorio</h1>
+  <form id="eligibilityForm">
+    <label>Nombre:</label><input type="text" name="name"><br>
+    <label>Año de nacimiento:</label><input type="number" name="birthYear"><br>
+    <label>País de origen:</label><input type="text" name="country"><br>
+    <button type="submit">Verificar elegibilidad</button>
+  </form>
+  <div id="result"></div>
+  <br>
+  <a href="/api/pdf" target="_blank">Descargar PDF de muestra</a>
+  <script>
+    document.getElementById('eligibilityForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        birthYear: parseInt(form.birthYear.value),
+        country: form.country.value
+      };
+      const res = await fetch('/api/eligibility', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      document.getElementById('result').innerText = json.message;
+    };
+  </script>
+</body>
+</html>
